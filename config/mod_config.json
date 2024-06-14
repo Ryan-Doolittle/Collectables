@@ -1,4 +1,5 @@
 {
     "debug": false,
-    "fallback_trader": "ragman"
+    "fallback_trader": "ragman",
+    "enable_container_spawns": true
 }

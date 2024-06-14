@@ -8,7 +8,7 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { customItemConfigs } from "./item_configs";
 import * as modConfig from "../config/mod_config.json";
-import * as gift from "../config/gift/gift_config.json";
+import * as gift from "../config/gifts/gift_configs.json";
 
 
 class Mod implements IPostAkiLoadMod, IPostDBLoadMod 
@@ -204,7 +204,7 @@ class Mod implements IPostAkiLoadMod, IPostDBLoadMod
 
     private addToLootableContainers(tables, config): void 
     {
-        if (config.lootable) 
+        if (config.lootable && modConfig.enable_container_spawns) 
         {
             const container = tables.loot.staticLoot[config.container];
             this.debug_to_console(`[${this.modName}] : Adding ${config.item_name} to ${config.container} at ${config.probability.relativeProbability} probability`, "blue")
