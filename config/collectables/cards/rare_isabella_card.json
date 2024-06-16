@@ -16,7 +16,7 @@
     "trader_loyalty_level": 1,
     "can_sell_on_ragfair": false,
     "currency": "roubles",
-    "price": 24249,
+    "price": 29269,
     "weight": 0.01,
     "container": "578f8782245977354405a1e3",
     "unlimited_stock": true,
@@ -29,10 +29,7 @@
         "width": 1,
         "height": 1
     },
-    "probability": {
-        "tpl": "rare_isabella_card",
-        "relativeProbability": 121548
-    },
+    "rarity": "rare",
     "case_allowed_in": [
         ""
     ],

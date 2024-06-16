@@ -16,7 +16,7 @@
     "trader_loyalty_level": 1,
     "can_sell_on_ragfair": false,
     "currency": "roubles",
-    "price": 7453,
+    "price": 9389,
     "weight": 0.01,
     "container": "5909e4b686f7747f5b744fa4",
     "unlimited_stock": true,
@@ -29,10 +29,7 @@
         "width": 1,
         "height": 1
     },
-    "probability": {
-        "tpl": "common_penny_card",
-        "relativeProbability": 31611
-    },
+    "rarity": "common",
     "case_allowed_in": [
         ""
     ],

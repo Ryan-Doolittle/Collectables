@@ -1,5 +1,11 @@
 {
     "debug": true,
     "fallback_trader": "ragman",
-    "enable_container_spawns": true
+    "enable_container_spawns": true,
+
+    "--//Item probability scalers": "0 - 1",
+    "common": 0.5,
+    "rare": 0.35,
+    "epic": 0.15,
+    "ultimate": 0.07
 }

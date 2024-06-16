@@ -17,10 +17,10 @@
     "currency": "roubles",
     "price": 350000,
     "weight": 0.3,
-    "container": "5909e4b686f7747f5b744fa4",
+    "container": "6582e6d7b14c3f72eb071420",
     "probability": {
         "tpl": "binder_red",
-        "relativeProbability": 6281
+        "relativeProbability": 1186
     },
     "unlimited_stock": true,
     "stock_amount": 999999,

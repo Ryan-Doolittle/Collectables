@@ -26,6 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const item_configs_1 = require("./item_configs");
 const modConfig = __importStar(require("../config/mod_config.json"));
 const gift = __importStar(require("../config/gift/gift_config.json"));
+const relativeProbabilities = __importStar(require("../config/probabilities.json"));
 class Mod {
     logger;
     modName = "Collectables";
@@ -78,7 +79,7 @@ class Mod {
             this.addToRandomLootContainers(configInventory, config);
             this.addItemToTrophyStand(tables, config);
             fenceBlacklist.push(config.id);
-            // ragfairBlacklist.push(config.id)
+            ragfairBlacklist.push(config.id);
             if (config.special) {
                 this.debug_to_console(`Adding ${config.id} to pockets`, "blue");
                 addItemToAllSlotsFilters(tables.templates.items["627a4e6b255f7527fb05a0f6"], config.id);
@@ -181,10 +182,21 @@ class Mod {
         }
     }
     addToLootableContainers(tables, config) {
+        let probability;
+        if (!config.probability && config.rarity) {
+            probability = {
+                "tpl": config.id,
+                "relativeProbability": Math.ceil(relativeProbabilities[config.container]["max_found"] * modConfig[config.rarity])
+            };
+            this.debug_to_console(`Adding ${config.item_name} to ${config.container} at ${probability.relativeProbability} probability`, "yellow");
+        }
+        else {
+            probability = config.probability;
+            this.debug_to_console(`Adding ${config.item_name} to ${config.container} at ${probability.relativeProbability} probability`, "blue");
+        }
         if (config.lootable && modConfig.enable_container_spawns) {
             const container = tables.loot.staticLoot[config.container];
-            this.debug_to_console(`Adding ${config.item_name} to ${config.container} at ${config.probability.relativeProbability} probability`, "blue");
-            container.itemDistribution.push(config.probability);
+            container.itemDistribution.push(probability);
         }
     }
     addToRandomLootContainers(configInventory, config) {

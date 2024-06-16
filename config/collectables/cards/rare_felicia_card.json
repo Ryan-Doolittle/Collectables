@@ -16,7 +16,7 @@
     "trader_loyalty_level": 1,
     "can_sell_on_ragfair": false,
     "currency": "roubles",
-    "price": 34500,
+    "price": 22214,
     "weight": 0.01,
     "container": "5c052cea86f7746b2101e8d8",
     "unlimited_stock": true,
@@ -29,10 +29,7 @@
         "width": 1,
         "height": 1
     },
-    "probability": {
-        "tpl": "rare_felicia_card",
-        "relativeProbability": 8007
-    },
+    "rarity": "rare",
     "case_allowed_in": [
         ""
     ],

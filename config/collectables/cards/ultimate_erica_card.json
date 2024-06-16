@@ -16,7 +16,7 @@
     "trader_loyalty_level": 1,
     "can_sell_on_ragfair": false,
     "currency": "roubles",
-    "price": 446353,
+    "price": 302351,
     "weight": 0.01,
     "container": "578f87a3245977356274f2cb",
     "unlimited_stock": true,
@@ -29,10 +29,7 @@
         "width": 1,
         "height": 1
     },
-    "probability": {
-        "tpl": "ultimate_erica_card",
-        "relativeProbability": 10298
-    },
+    "rarity": "ultimate",
     "case_allowed_in": [
         ""
     ],

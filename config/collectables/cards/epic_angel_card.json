@@ -16,7 +16,7 @@
     "trader_loyalty_level": 1,
     "can_sell_on_ragfair": false,
     "currency": "roubles",
-    "price": 46644,
+    "price": 57889,
     "weight": 0.01,
     "container": "578f87b7245977356274f2cd",
     "unlimited_stock": true,
@@ -29,10 +29,7 @@
         "width": 1,
         "height": 1
     },
-    "probability": {
-        "tpl": "epic_angel_card",
-        "relativeProbability": 53464
-    },
+    "rarity": "epic",
     "case_allowed_in": [
         ""
     ],

@@ -16,7 +16,7 @@
     "trader_loyalty_level": 1,
     "can_sell_on_ragfair": false,
     "currency": "roubles",
-    "price": 9668,
+    "price": 8179,
     "weight": 0.01,
     "container": "578f87ad245977356274f2cc",
     "unlimited_stock": true,
@@ -29,10 +29,7 @@
         "width": 1,
         "height": 1
     },
-    "probability": {
-        "tpl": "common_vanessa_card",
-        "relativeProbability": 20937
-    },
+    "rarity": "common",
     "case_allowed_in": [
         ""
     ],
