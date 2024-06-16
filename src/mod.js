@@ -25,6 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const item_configs_1 = require("./item_configs");
 const modConfig = __importStar(require("../config/mod_config.json"));
+const gift = __importStar(require("../config/gift/gift_config.json"));
 class Mod {
     logger;
     modName = "Collectables";
@@ -47,7 +48,10 @@ class Mod {
         const locales = Object.values(tables.locales.global);
         const configTraders = configServer.getConfigByString("aki-trader");
         const configInventory = configServer.getConfigByString("aki-inventory");
+        const configRagfair = configServer.getConfigByString("aki-ragfair");
+        const giftList = configServer.getConfigByString("aki-gifts");
         const fenceBlacklist = configTraders["fence"]["blacklist"];
+        const ragfairBlacklist = configRagfair["dynamic"]["blacklist"]["custom"];
         const traderIDs = {
             mechanic: "5a7c2eca46aef81a7ca2145d",
             skier: "58330581ace78e27b8b10cee",
@@ -62,6 +66,7 @@ class Mod {
             euros: "569668774bdc2da2298b4568",
             dollars: "5696686a4bdc2da3298b456a"
         };
+        giftList["gifts"]["STARTERPACKS"] = gift.STARTERPACKS;
         item_configs_1.customItemConfigs.forEach(config => {
             this.ensureCompatFilters(tables);
             const item = this.createCustomItem(jsonUtil, tables, config);
@@ -71,9 +76,11 @@ class Mod {
             this.addToTraderInventory(tables, config, traderIDs, currencyIDs);
             this.addToLootableContainers(tables, config);
             this.addToRandomLootContainers(configInventory, config);
+            this.addItemToTrophyStand(tables, config);
             fenceBlacklist.push(config.id);
+            // ragfairBlacklist.push(config.id)
             if (config.special) {
-                this.debug_to_console(`[${this.modName}] : Adding ${config.id} to pockets`, "blue");
+                this.debug_to_console(`Adding ${config.id} to pockets`, "blue");
                 addItemToAllSlotsFilters(tables.templates.items["627a4e6b255f7527fb05a0f6"], config.id);
                 addItemToAllSlotsFilters(tables.templates.items["CustomPocket"], config.id);
             }
@@ -118,12 +125,13 @@ class Mod {
         item._props.IsUndiscardable = config.isundiscardable;
         item._props.IsUngivable = config.isungivable;
         item._props.DiscardLimit = config.discardlimit;
+        item._props.CanSellOnRagfair = config.can_sell_on_ragfair;
         if (config.gridStructure) {
-            this.debug_to_console(`[${this.modName}] : Creating grid for ${config.item_name}`, "blue");
+            this.debug_to_console(`Creating grid for ${config.item_name}`, "blue");
             item._props.Grids = this.createGrid(config);
         }
         if (config.slotStructure) {
-            this.debug_to_console(`[${this.modName}] : Creating slots for ${config.item_name}`, "blue");
+            this.debug_to_console(`Creating slots for ${config.item_name}`, "blue");
             item._props.Slots = config.slotStructure;
         }
         return item;
@@ -144,7 +152,7 @@ class Mod {
     }
     addToTraderInventory(tables, config, traderIDs, currencyIDs) {
         if (config.sold) {
-            this.debug_to_console(`[${this.modName}] : Adding ${config.item_name} to ${config.trader}`, "blue");
+            this.debug_to_console(`Adding ${config.item_name} to ${config.trader}`, "blue");
             const traderId = traderIDs[config.trader] || config.trader;
             const currencyId = currencyIDs[config.currency] || config.currency;
             let trader = tables.traders[traderId];
@@ -173,23 +181,23 @@ class Mod {
         }
     }
     addToLootableContainers(tables, config) {
-        if (config.lootable) {
+        if (config.lootable && modConfig.enable_container_spawns) {
             const container = tables.loot.staticLoot[config.container];
-            this.debug_to_console(`[${this.modName}] : Adding ${config.item_name} to ${config.container} at ${config.probability.relativeProbability} probability`, "blue");
+            this.debug_to_console(`Adding ${config.item_name} to ${config.container} at ${config.probability.relativeProbability} probability`, "blue");
             container.itemDistribution.push(config.probability);
         }
     }
     addToRandomLootContainers(configInventory, config) {
         if (config.is_loot_box) {
             configInventory.randomLootContainers[config.id] = config.lootContent;
-            this.debug_to_console(`[${this.modName}] : Adding ${config.item_name} to Random Loot Boxes list`, "blue");
+            this.debug_to_console(`Adding ${config.item_name} to Random Loot Boxes list`, "blue");
         }
     }
     createGrid(config) {
         const grids = [];
         const gridStructure = config.gridStructure;
         if (!gridStructure || gridStructure.length === 0) {
-            this.logger.log(`[${this.modName}] : ERROR: Grid structure is undefined or empty.`, "red");
+            this.logger.log(`ERROR: Grid structure is undefined or empty.`, "red");
             return grids;
         }
         gridStructure.forEach((row, rowIndex) => {
@@ -231,6 +239,31 @@ class Mod {
                 isSortingTable: false
             }
         };
+    }
+    addItemToTrophyStand(tables, config) {
+        if (config.is_trophy) {
+            const templates = tables.templates.items;
+            const itemsToUpdate = [
+                "63dbd45917fff4dee40fe16e",
+                "65424185a57eea37ed6562e9",
+                "6542435ea57eea37ed6562f0"
+            ];
+            itemsToUpdate.forEach(itemsToUpdate => {
+                this.debug_to_console(itemsToUpdate, "red");
+                const item = templates[itemsToUpdate];
+                if (item && item._props && item._props.Slots) {
+                    const slots = item._props.Slots;
+                    slots.forEach((slot) => {
+                        if (slot._name.includes("bigTrophies")) {
+                            this.debug_to_console(`${config.item_name} added to ${slot._name}`, "yellow");
+                            slot._props.filters.forEach((filterGroup) => {
+                                filterGroup.Filter.push(config.id);
+                            });
+                        }
+                    });
+                }
+            });
+        }
     }
     debug_to_console(string, color) {
         if (modConfig.debug) {

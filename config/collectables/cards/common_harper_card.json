@@ -1,4 +1,5 @@
 {
+    "item_type": "card",
     "clone_item": "573474f924597738002c6174",
     "id": "common_harper_card",
     "item_name": "Common Collectable Card: Harper",
@@ -15,7 +16,7 @@
     "trader_loyalty_level": 1,
     "can_sell_on_ragfair": false,
     "currency": "roubles",
-    "price": 8536,
+    "price": 5957,
     "weight": 0.01,
     "container": "578f87a3245977356274f2cb",
     "unlimited_stock": true,
@@ -30,7 +31,7 @@
     },
     "probability": {
         "tpl": "common_harper_card",
-        "relativeProbability": 102971
+        "relativeProbability": 73551
     },
     "case_allowed_in": [
         ""
@@ -47,8 +48,6 @@
     "isunremovable": false,
     "discardingblock": false,
     "isundiscardable": false,
-    "CanSellOnRagfair": true,
-    "RagFairCommissionModifier": 1,
     "isungivable": false,
     "discardlimit": 2
 }

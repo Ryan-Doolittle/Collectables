@@ -1,4 +1,5 @@
 {
+    "item_type": "card",
     "clone_item": "573474f924597738002c6174",
     "id": "common_invite_card",
     "item_name": "Common Collectable Card: Invite",
@@ -15,7 +16,7 @@
     "trader_loyalty_level": 1,
     "can_sell_on_ragfair": false,
     "currency": "roubles",
-    "price": 8421,
+    "price": 5950,
     "weight": 0.01,
     "container": "5d6d2b5486f774785c2ba8ea",
     "unlimited_stock": true,
@@ -30,7 +31,7 @@
     },
     "probability": {
         "tpl": "common_invite_card",
-        "relativeProbability": 9471
+        "relativeProbability": 6765
     },
     "case_allowed_in": [
         ""
@@ -47,8 +48,6 @@
     "isunremovable": false,
     "discardingblock": false,
     "isundiscardable": false,
-    "CanSellOnRagfair": true,
-    "RagFairCommissionModifier": 1,
     "isungivable": false,
     "discardlimit": 2
 }

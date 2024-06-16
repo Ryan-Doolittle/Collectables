@@ -1,4 +1,5 @@
 {
+    "item_type": "card",
     "clone_item": "573474f924597738002c6174",
     "id": "common_lindsay_card",
     "item_name": "Common Collectable Card: Lindsay",
@@ -15,7 +16,7 @@
     "trader_loyalty_level": 1,
     "can_sell_on_ragfair": false,
     "currency": "roubles",
-    "price": 7404,
+    "price": 6017,
     "weight": 0.01,
     "container": "5909e4b686f7747f5b744fa4",
     "unlimited_stock": true,
@@ -30,7 +31,7 @@
     },
     "probability": {
         "tpl": "common_lindsay_card",
-        "relativeProbability": 44255
+        "relativeProbability": 31611
     },
     "case_allowed_in": [
         ""
@@ -47,8 +48,6 @@
     "isunremovable": false,
     "discardingblock": false,
     "isundiscardable": false,
-    "CanSellOnRagfair": true,
-    "RagFairCommissionModifier": 1,
     "isungivable": false,
     "discardlimit": 2
 }

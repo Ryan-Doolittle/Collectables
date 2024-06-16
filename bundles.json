@@ -65,6 +65,14 @@
             ]
         },
         {
+            "key": "cases/card_case.bundle",
+            "dependencyKeys": [
+                "shaders",
+                "cubemaps",
+                "assets/commonassets/physics/physicsmaterials.bundle"
+            ]
+        },
+        {
             "key": "cases/sc_large.bundle",
             "dependencyKeys": [
                 "shaders",

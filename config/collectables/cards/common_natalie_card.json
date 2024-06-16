@@ -1,4 +1,5 @@
 {
+    "item_type": "card",
     "clone_item": "573474f924597738002c6174",
     "id": "common_natalie_card",
     "item_name": "Common Collectable Card: Natalie",
@@ -15,7 +16,7 @@
     "trader_loyalty_level": 1,
     "can_sell_on_ragfair": false,
     "currency": "roubles",
-    "price": 7811,
+    "price": 6910,
     "weight": 0.01,
     "container": "578f8782245977354405a1e3",
     "unlimited_stock": true,
@@ -30,7 +31,7 @@
     },
     "probability": {
         "tpl": "common_natalie_card",
-        "relativeProbability": 243095
+        "relativeProbability": 173640
     },
     "case_allowed_in": [
         ""
@@ -47,8 +48,6 @@
     "isunremovable": false,
     "discardingblock": false,
     "isundiscardable": false,
-    "CanSellOnRagfair": true,
-    "RagFairCommissionModifier": 1,
     "isungivable": false,
     "discardlimit": 2
 }

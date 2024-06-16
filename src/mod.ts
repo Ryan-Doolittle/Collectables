@@ -8,7 +8,7 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { customItemConfigs } from "./item_configs";
 import * as modConfig from "../config/mod_config.json";
-import * as gift from "../config/gifts/gift_configs.json";
+import * as gift from "../config/gift/gift_config.json";
 
 
 class Mod implements IPostAkiLoadMod, IPostDBLoadMod 
@@ -41,9 +41,13 @@ class Mod implements IPostAkiLoadMod, IPostDBLoadMod
         const locales = Object.values(tables.locales.global) as Record<string, string>[];
         const configTraders = configServer.getConfigByString("aki-trader");
         const configInventory = configServer.getConfigByString("aki-inventory");
+        const configRagfair = configServer.getConfigByString("aki-ragfair");
         const giftList = configServer.getConfigByString("aki-gifts");
 
         const fenceBlacklist = configTraders["fence"]["blacklist"]
+        const ragfairBlacklist = configRagfair["dynamic"]["blacklist"]["custom"]
+
+
         const traderIDs = {
             mechanic: "5a7c2eca46aef81a7ca2145d",
             skier: "58330581ace78e27b8b10cee",
@@ -72,11 +76,13 @@ class Mod implements IPostAkiLoadMod, IPostDBLoadMod
             this.addToTraderInventory(tables, config, traderIDs, currencyIDs);
             this.addToLootableContainers(tables, config);
             this.addToRandomLootContainers(configInventory, config);
+            this.addItemToTrophyStand(tables, config)
             fenceBlacklist.push(config.id)
+            ragfairBlacklist.push(config.id)
 
             if (config.special) 
             {
-                this.debug_to_console(`[${this.modName}] : Adding ${config.id} to pockets`, "blue")
+                this.debug_to_console(`Adding ${config.id} to pockets`, "blue")
                 addItemToAllSlotsFilters(tables.templates.items["627a4e6b255f7527fb05a0f6"], config.id);
                 addItemToAllSlotsFilters(tables.templates.items["CustomPocket"], config.id);
             }
@@ -134,12 +140,12 @@ class Mod implements IPostAkiLoadMod, IPostDBLoadMod
 
         if (config.gridStructure) 
         {
-            this.debug_to_console(`[${this.modName}] : Creating grid for ${config.item_name}`, "blue")
+            this.debug_to_console(`Creating grid for ${config.item_name}`, "blue")
             item._props.Grids = this.createGrid(config);
         }
         if (config.slotStructure) 
         {
-            this.debug_to_console(`[${this.modName}] : Creating slots for ${config.item_name}`, "blue")
+            this.debug_to_console(`Creating slots for ${config.item_name}`, "blue")
             item._props.Slots = config.slotStructure;
         }
 
@@ -169,7 +175,7 @@ class Mod implements IPostAkiLoadMod, IPostDBLoadMod
     {
         if (config.sold) 
         {
-            this.debug_to_console(`[${this.modName}] : Adding ${config.item_name} to ${config.trader}`, "blue")
+            this.debug_to_console(`Adding ${config.item_name} to ${config.trader}`, "blue")
 
             const traderId = traderIDs[config.trader] || config.trader;
             const currencyId = currencyIDs[config.currency] || config.currency;
@@ -207,7 +213,7 @@ class Mod implements IPostAkiLoadMod, IPostDBLoadMod
         if (config.lootable && modConfig.enable_container_spawns) 
         {
             const container = tables.loot.staticLoot[config.container];
-            this.debug_to_console(`[${this.modName}] : Adding ${config.item_name} to ${config.container} at ${config.probability.relativeProbability} probability`, "blue")
+            this.debug_to_console(`Adding ${config.item_name} to ${config.container} at ${config.probability.relativeProbability} probability`, "blue")
             container.itemDistribution.push(config.probability);
         }
     }
@@ -217,7 +223,7 @@ class Mod implements IPostAkiLoadMod, IPostDBLoadMod
         if (config.is_loot_box) 
         {
             configInventory.randomLootContainers[config.id] = config.lootContent
-            this.debug_to_console(`[${this.modName}] : Adding ${config.item_name} to Random Loot Boxes list`, "blue")
+            this.debug_to_console(`Adding ${config.item_name} to Random Loot Boxes list`, "blue")
         }
     }
 
@@ -228,7 +234,7 @@ class Mod implements IPostAkiLoadMod, IPostDBLoadMod
 
         if (!gridStructure || gridStructure.length === 0) 
         {
-            this.logger.log(`[${this.modName}] : ERROR: Grid structure is undefined or empty.`, "red");
+            this.logger.log(`ERROR: Grid structure is undefined or empty.`, "red");
             return grids;
         }
 
@@ -281,6 +287,33 @@ class Mod implements IPostAkiLoadMod, IPostDBLoadMod
         };
     }
 
+    private addItemToTrophyStand(tables: any, config: any): any {
+        if (config.is_trophy) {
+            const templates = tables.templates.items;
+            const itemsToUpdate = [
+                "63dbd45917fff4dee40fe16e",
+                "65424185a57eea37ed6562e9",
+                "6542435ea57eea37ed6562f0"
+            ];
+
+            itemsToUpdate.forEach(itemsToUpdate => {
+                this.debug_to_console(itemsToUpdate, "red")
+                const item = templates[itemsToUpdate];
+                if (item && item._props && item._props.Slots) {
+                    const slots = item._props.Slots;
+                    slots.forEach((slot: any) => {
+                        if (slot._name.includes("bigTrophies")) {
+                            this.debug_to_console(`${config.item_name} added to ${slot._name}`, "yellow")
+                            slot._props.filters.forEach((filterGroup: { Filter: string[] }) => {
+                                filterGroup.Filter.push(config.id);
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    }
+
     private debug_to_console(string:string, color:string): any
     {
         if (modConfig.debug)
@@ -289,6 +322,7 @@ class Mod implements IPostAkiLoadMod, IPostDBLoadMod
         }
     }
 }
+
 
 const addItemToAllSlotsFilters = (item, itemIdToAdd) => 
 {

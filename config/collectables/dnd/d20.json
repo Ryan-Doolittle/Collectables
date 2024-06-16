@@ -1,4 +1,5 @@
 {
+    "item_type": "collectable",
     "clone_item": "573474f924597738002c6174",
     "id": "dnd_d20",
     "item_name": "d20 - Copper / Black",
@@ -12,7 +13,6 @@
     "lootable": true,
     "trader": "therapist",
     "trader_loyalty_level": 1,
-    "can_sell_on_ragfair": false,
     "stack_max_size": 1,
     "currency": "roubles",
     "price": 37800,
@@ -20,7 +20,7 @@
     "container": "5909e4b686f7747f5b744fa4",
     "probability": {
         "tpl": "dnd_d20",
-        "relativeProbability": 9484
+        "relativeProbability": 2400
     },
     "unlimited_stock": true,
     "stock_amount": 999999,
@@ -46,6 +46,8 @@
     "isunremovable": false,
     "discardingblock": false,
     "isundiscardable": false,
+    "CanSellOnRagfair": false,
+    "RagFairCommissionModifier": 1,
     "isungivable": false,
     "discardlimit": 2
 }
